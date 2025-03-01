@@ -130,9 +130,6 @@ vec2 Cone(vec3 p, vec3 c, float t, float h)
     // Rotate the cone around the y-axis
     p = vec3(p.x, -p.z, p.y); 
 
-    // Rotate the cone around the y-axis
-    p = vec3(p.x, -p.z, p.y); 
-
     vec2 cxy = vec2(sin(t), cos(t)); 
     vec2 q = h * vec2(cxy.x / cxy.y, -1.0);
     vec2 w = vec2( length(p.xz), p.y );
