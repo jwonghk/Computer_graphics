@@ -13,5 +13,8 @@ void main() {
     // TODO: compute the out variables declared above. Think about which frame(s) each
     // variable should be defined with respect to
 
+    viewPosition = vec3(viewMatrix*modelMatrix*vec4(position, 1.0));
+    worldPosition = vec3(modelMatrix*vec4(position,1.0));
+    interpolatedNormal = normalize(normalMatrix*normal);
     gl_Position = projectionMatrix * viewMatrix * modelMatrix * vec4(position, 1.0);
 }
