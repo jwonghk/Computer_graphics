@@ -68,12 +68,45 @@ helmetAlbedoMap.wrapT = 1000;
 // TODO: implement helmetMetalRoughnessMap, helmetEmissiveMap, helmetNormalMap, helmetAOMap
 // similarly to how helmetAlbedoMap is implemented
 
+const helmetMetalRoughnessMap = new THREE.TextureLoader().load('gltf/Default_metalRoughness.jpg');
+helmetMetalRoughnessMap.flipY = false;  // Prevent flipping of the texture (common practice for consistency in 3D rendering)
+helmetMetalRoughnessMap.wrapS = THREE.RepeatWrapping;  // Repeat the texture horizontally
+helmetMetalRoughnessMap.wrapT = THREE.RepeatWrapping;  // Repeat the texture vertically
+
+const helmetEmissiveMap = new THREE.TextureLoader().load('gltf/Default_emissive.jpg');
+helmetEmissiveMap.flipY = false;  // Prevent flipping of the texture
+helmetEmissiveMap.wrapS = THREE.RepeatWrapping;  // Repeat the texture horizontally
+helmetEmissiveMap.wrapT = THREE.RepeatWrapping;  // Repeat the texture vertically
+
+const helmetNormalMap = new THREE.TextureLoader().load('gltf/Default_normal.jpg');
+helmetNormalMap.flipY = false;  // Prevent flipping of the texture
+helmetNormalMap.wrapS = THREE.RepeatWrapping;  // Repeat the texture horizontally
+helmetNormalMap.wrapT = THREE.RepeatWrapping;  // Repeat the texture vertically
+
+const helmetA0Map = new THREE.TextureLoader().load('gltf/Default_AO.jpg');
+helmetA0Map.flipY = false;  // Prevent flipping of the texture
+helmetA0Map.wrapS = THREE.RepeatWrapping;  // Repeat the texture horizontally
+helmetA0Map.wrapT = THREE.RepeatWrapping;  // Repeat the texture vertically
+
 const helmetPBRMaterial = new THREE.MeshStandardMaterial({
   // TODO: pass texture maps to the material. Note that
   // both metalnessMap and roughnessMap should be set to the same
   // texture map
+  map: helmetAlbedoMap,
+  metalnessMap: helmetMetalRoughnessMap,
+  roughnessMap: helmetEmissiveMap,
+  emissiveMap: helmetEmissiveMap,
+  normalMap: helmetNormalMap,
+  aoMap: helmetA0Map,
+  roughness: 0.5,   
+  color: new THREE.Color(1, 1, 1),
+  envMapIntensity: 1.0  
 });
 // TODO: set the material's emissive color and metalness
+helmetPBRMaterial.emissive = new THREE.Color(0x444444);
+helmetPBRMaterial.metalness = 1.0;
+helmetPBRMaterial.emissiveIntensity = 1.0; 
+
 
 // Load shaders
 const shaderFiles = [
@@ -103,7 +136,7 @@ const shaders = {
   PBR: { key: 2, material: helmetPBRMaterial },
 };
 
-let mode = shaders.BLINNPHONG.key; // Default
+let mode = shaders.RAYMARCHING.key; // Default
 
 // Set up scenes
 let scenes = [];
